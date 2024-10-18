@@ -1,8 +1,8 @@
-const Personal = require('../models/PersonalModel');
+const PersonalModel = require('../models/PersonalModel');
 
 exports.getPersonalAll = async (req, res) => {
     try {
-        const Personals = await Personal.find();
+        const Personals = await PersonalModel.find();
         res.json({ message: "Lấy danh sách Personal thành công", data: Personals });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -18,7 +18,7 @@ exports.createPersonal = async (req, res) => {
 
     const newPersonal = new Personal(req.body);
     try {
-        const savedPlan = await newPersonal.save();
+        const savedPlan = await PersonalModel.save();
         res.status(201).json({ message: "Tạo Personal thành công", data: savedPlan });
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -32,13 +32,13 @@ exports.editPersonal = async (req, res) => {
         return res.status(400).json({ message: "Tất cả các trường là bắt buộc." });
     }
 
-    const Personal = await Personal.findById(req.params.id);
+    const Personal = await PersonalModel.findById(req.params.id);
     if (!Personal) {
         return res.status(404).json({ message: "Personal plan không tồn tại." });
     }
 
     try {
-        const updatedPlan = await Personal.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedPlan = await PersonalModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json({ message: "Cập nhật Personal thành công", data: updatedPlan });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -46,13 +46,13 @@ exports.editPersonal = async (req, res) => {
 };
 
 exports.deletePersonal = async (req, res) => {
-    const Personal = await Personal.findById(req.params.id);
+    const Personal = await PersonalModel.findById(req.params.id);
     if (!Personal) {
         return res.status(404).json({ message: "Personal plan không tồn tại." });
     }
 
     try {
-        await Personal.findByIdAndDelete(req.params.id);
+        await PersonalModel.findByIdAndDelete(req.params.id);
         res.status(204).json({ message: "Xóa Personal thành công" });
     } catch (error) {
         res.status(500).json({ message: error.message });

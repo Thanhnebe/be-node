@@ -13,13 +13,13 @@ router.delete('/deleteWorkout/:id', WorkoutController.deleteWourkout);
 
 
 
-router.get('/peronal', PersonalController.getPersonalAll);
+router.get('/personal', PersonalController.getPersonalAll);
 
-router.post('/createWorkout', PersonalController.createPersonal);
+router.post('/createPersonal', PersonalController.createPersonal);
 
-router.put('/editWorkout/:id', PersonalController.editPersonal);
+router.put('/editPersonal/:id', PersonalController.editPersonal);
 
-router.delete('/deleteWorkout/:id', PersonalController.deletePersonal);
+router.delete('/deletePersonal/:id', PersonalController.deletePersonal);
 
 
 module.exports = router;
