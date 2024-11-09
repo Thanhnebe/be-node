@@ -5,11 +5,11 @@ const PersonalController = require('../controllers/PersonalController')
 
 router.get('/workoutall', WorkoutController.getWorkoutAll);
 
-router.post('/createWorkout', WorkoutController.createWourkout);
+router.post('/createWorkout', WorkoutController.createWorkout);
 
-router.put('/editWorkout/:id', WorkoutController.editWourkout);
+router.put('/editWorkout/:id', WorkoutController.editWorkout);
 
-router.delete('/deleteWorkout/:id', WorkoutController.deleteWourkout);
+router.delete('/deleteWorkout/:id', WorkoutController.deleteWorkout);
 
 
 

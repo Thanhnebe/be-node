@@ -1,39 +1,46 @@
-const mongoose = require('mongoose');
+const { DataTypes, Model } = require('sequelize');
+const { sequelize } = require('../config/db'); // Adjust the path to your sequelize config
 
-const personalSchema = new mongoose.Schema({
-  user_id: {
-    type: Number,
-    required: true,
+class Personal extends Model { }
+
+Personal.init(
+  {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    plan_details: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    goal: {
+      type: DataTypes.ENUM('Weight Loss', 'Muscle Gain', 'Maintenance'),
+      allowNull: false,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
-  plan_details: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: Number,
-    required: true,
-  },
-  goal: {
-    type: String,
-    enum: ['Weight Loss', 'Muscle Gain', 'Maintenance'],
-    required: true,
-  },
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now,
+  {
+    sequelize,
+    modelName: 'Personal',
+    tableName: 'personal', // Adjust this if your table name differs
+    timestamps: false, // Disable Sequelize's automatic timestamps
+    hooks: {
+      beforeUpdate: (personal) => {
+        personal.updated_at = new Date();
+      },
+    },
   }
-});
-
-// Middleware to update the updated_at field before saving the document
-personalSchema.pre('save', function(next) {
-  this.updated_at = Date.now();
-  next();
-});
-
-const Personal = mongoose.model('Personal', personalSchema);
+);
 
 module.exports = Personal;
